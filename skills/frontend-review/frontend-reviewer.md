@@ -39,7 +39,7 @@
 - [ ] 灰色文字在彩色背景上（可读性差的 `color: gray` on `background: color`）
 - [ ] 装饰性 bounce 动画（`cubic-bezier` 回弹且无功能目的）
 
-**注意**：这些元素在有明确设计意图时可以使用。判断的是"无脑堆砌"还是"刻意选择"。
+**注意**：这些元素在有明确设计意图时可以使用。判断的是"无脑堆砌"还是"刻意选择"。判断锚点：如果 .impeccable.md 中明确将该元素列为品牌视觉的一部分，或代码注释说明了设计意图，则视为有设计意图。缺乏任何上下文解释的使用，默认判定为 slop。
 
 ### Gate 2: Dark Mode Functional
 
@@ -244,7 +244,7 @@ Gate 和 Score 不是独立的——Gate 失败会压制对应维度的分数：
 | States Complete | Interaction & Motion | 6.0 |
 | Design Token Aligned | Code Architecture | 5.0 |
 
-Gate 为 N/A 时不压制分数。
+Gate 为 N/A 时不压制分数。多个 Gate 指向同一维度时，取最低分数上限。
 
 ```
 PASS ✅ = 所有 Gate 为 YES（或 N/A）
