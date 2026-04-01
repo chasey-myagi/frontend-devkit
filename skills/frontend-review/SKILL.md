@@ -5,9 +5,15 @@ description: >
   Reviews visual design, typography, interaction, accessibility, performance,
   and code architecture. Dispatches an independent reviewer agent.
   Use when: (1) frontend implementation is complete, (2) user says /frontend-review,
-  (3) before merging frontend code, (4) after impeccable:frontend-design implementation.
+  (3) before merging frontend code, (4) after impeccable:frontend-design implementation,
+  (5) user says "UI 做完了", "看看这个页面", "check the design", "审一下前端".
+  Make sure to use this skill whenever the user has finished implementing frontend code
+  and wants quality validation — even if they don't explicitly say "review". If the user
+  says things like "the page is done", "UI is ready", "take a look at this component",
+  or asks about frontend quality in any way, this skill applies.
   Triggers on: "review the frontend", "check the UI", "frontend quality gate",
-  "审查前端", "前端质量".
+  "审查前端", "前端质量", "UI做完了", "页面写好了", "看看效果", "check the design",
+  "is this ready", "前端能合了吗".
 user-invokable: true
 args:
   - name: target
@@ -88,6 +94,9 @@ Prompt 结构：
 ### 设计规范
 {design-spec.md 内容，或 "无"}
 
+### 设计原则参考
+{frontend-design/SKILL.md 的内容 — 特别是 DON'T list 和核心设计原则}
+
 ### 完整文件内容
 {被审文件的完整内容}
 ```
@@ -95,6 +104,8 @@ Prompt 结构：
 ## Step 4: Present Report
 
 Reviewer agent 返回报告后，直接展示给用户。报告包含：
+
+**注意**：Reviewer agent 通过代码静态分析推断视觉效果，非实际渲染。对于 Visual Design 和 Interaction & Motion 维度，建议用户在浏览器中打开页面做视觉对照确认。
 
 1. **Binary Gates** — 6 项 YES/NO 判定（置顶，最重要）
 2. **Dimension Scores** — 6 维评分表
