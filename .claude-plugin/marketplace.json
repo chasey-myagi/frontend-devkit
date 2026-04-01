@@ -1,0 +1,32 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "frontend-devkit",
+  "metadata": {
+    "description": "Frontend quality toolkit — impeccable design skills, UI case generation, design freeze, and frontend review gate"
+  },
+  "owner": {
+    "name": "Chasey"
+  },
+  "plugins": [
+    {
+      "name": "frontend-devkit",
+      "description": "Frontend quality toolkit — impeccable design skills, UI case generation, design freeze, and frontend review gate",
+      "version": "0.1.0",
+      "author": {
+        "name": "Chasey"
+      },
+      "source": "./",
+      "category": "frontend",
+      "tags": [
+        "frontend",
+        "design",
+        "review",
+        "quality",
+        "accessibility",
+        "ui-cases",
+        "impeccable",
+        "design-system"
+      ]
+    }
+  ]
+}
