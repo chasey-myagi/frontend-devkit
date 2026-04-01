@@ -24,33 +24,39 @@
 
 6 项硬性门控。每项只有 YES 或 NO，没有"部分通过"。
 
+**审查范围不足时的处理**：如果审查对象仅为部分文件（如单独的 CSS/JS 文件），无法完整评估某个 Gate 时，该 Gate 标为 N/A 并注明"审查范围不足以评估"。建议用户扩大审查范围以获得完整评估。
+
+以下每个 Gate 的检查清单为**负面指标**——命中（存在）任一项即判定该 Gate 为 NO。
+
 ### Gate 1: AI Slop Free
 
 **判定标准**：代码中是否存在 AI 生成的审美指纹？
 
 检查清单（任一命中 → NO）：
-- [ ] 紫/青渐变（`#6c5ce7` → `#00cec9` 或类似）作为主要视觉元素
-- [ ] 渐变文字（`background-clip: text` + 渐变）
-- [ ] 无目的的 Glassmorphism（`backdrop-filter: blur` 装饰性使用）
-- [ ] 霓虹辉光（`box-shadow: 0 0 Npx` 彩色发光）
-- [ ] Hero metrics 仪表盘布局（3-4 个大数字卡片横排）
-- [ ] 同构卡片网格（完全相同结构的卡片 × N）
-- [ ] 通用字体（仅使用 Inter/Roboto/Arial 且无排版设计）
-- [ ] 灰色文字在彩色背景上（可读性差的 `color: gray` on `background: color`）
-- [ ] 装饰性 bounce 动画（`cubic-bezier` 回弹且无功能目的）
+- 紫/青渐变（`#6c5ce7` → `#00cec9` 或类似）作为主要视觉元素
+- 渐变文字（`background-clip: text` + 渐变）
+- 无目的的 Glassmorphism（`backdrop-filter: blur` 装饰性使用）
+- 霓虹辉光（`box-shadow: 0 0 Npx` 彩色发光）
+- Hero metrics 仪表盘布局（3-4 个大数字卡片横排）
+- 同构卡片网格（完全相同结构的卡片 × N）
+- 通用字体（仅使用 Inter/Roboto/Arial 且无排版设计）
+- 灰色文字在彩色背景上（可读性差的 `color: gray` on `background: color`）
+- 装饰性 bounce 动画（`cubic-bezier` 回弹且无功能目的）
 
 **注意**：这些元素在有明确设计意图时可以使用。判断的是"无脑堆砌"还是"刻意选择"。判断锚点：如果 .impeccable.md 中明确将该元素列为品牌视觉的一部分，或代码注释说明了设计意图，则视为有设计意图。缺乏任何上下文解释的使用，默认判定为 slop。
+
+**设计原则参考的使用**：如果审查上下文中包含 `frontend-design` 的设计原则（DON'T list），将其作为 AI Slop 判定的权威依据。DON'T list 中列出的模式，除非有明确的设计意图证据，否则一律视为 slop。
 
 ### Gate 2: Dark Mode Functional
 
 **判定标准**：主题切换是否完整工作？
 
 检查清单（任一命中 → NO）：
-- [ ] 存在硬编码颜色值未走 CSS 变量/token（在 dark mode 下不会切换）
-- [ ] 深色模式下文字对比度 < 4.5:1
-- [ ] 深色模式下有看不见/看不清的 UI 元素
-- [ ] 主题切换时有元素闪烁或布局跳动
-- [ ] 图片/图标在深色模式下无适配（白底图标等）
+- 存在硬编码颜色值未走 CSS 变量/theme token/CSS-in-JS theme（在 dark mode 下不会切换）
+- 深色模式下文字对比度 < 4.5:1
+- 深色模式下有看不见/看不清的 UI 元素
+- 主题切换时有元素闪烁或布局跳动
+- 图片/图标在深色模式下无适配（白底图标等）
 
 如果项目明确不需要 dark mode → 此 Gate 标记为 N/A。
 
@@ -59,24 +65,24 @@
 **判定标准**：是否在常见视口下正常工作？
 
 检查清单（任一命中 → NO）：
-- [ ] 存在 `width: Npx`（固定像素宽度）导致小屏溢出
-- [ ] 触控目标 < 44×44px（按钮、链接、交互区域）
-- [ ] 在 375px 宽度下出现横向滚动
-- [ ] 文字在大字号（200%缩放）下布局破损
-- [ ] 缺少 `<meta name="viewport">` 标签
-- [ ] 无任何 media query 或响应式方案
+- 存在 `width: Npx`（固定像素宽度）导致小屏溢出
+- 触控目标 < 44×44px（按钮、链接、交互区域）
+- 在 375px 宽度下出现横向滚动
+- 文字在大字号（200%缩放）下布局破损
+- 缺少 `<meta name="viewport">` 标签
+- 无任何 media query 或响应式方案
 
 ### Gate 4: Keyboard Accessible
 
 **判定标准**：所有交互是否可通过键盘完成？
 
 检查清单（任一命中 → NO）：
-- [ ] 可点击元素使用 `<div>` / `<span>` 且无 `role`、`tabindex`、键盘事件
-- [ ] 无可见 focus indicator（`outline: none` 或 `outline: 0` 无替代样式）
-- [ ] Tab 顺序与视觉顺序不一致（`tabindex` 值 > 0，或 CSS order 重排但 DOM 未调整）
-- [ ] 存在 keyboard trap（焦点进入后无法 Tab 出）
-- [ ] Modal/Dialog 打开时焦点未转移到 modal 内
-- [ ] 缺少 skip navigation link（长页面时）
+- 可点击元素使用 `<div>` / `<span>` 且无 `role`、`tabindex`、键盘事件
+- 无可见 focus indicator（`outline: none` 或 `outline: 0` 无替代样式）
+- Tab 顺序与视觉顺序不一致（`tabindex` 值 > 0，或 CSS order 重排但 DOM 未调整）
+- 存在 keyboard trap（焦点进入后无法 Tab 出）
+- Modal/Dialog 打开时焦点未转移到 modal 内
+- 缺少 skip navigation link（长页面时）
 
 如果页面无交互元素（纯静态展示、文档页） → 此 Gate 标记为 N/A。
 
@@ -85,12 +91,12 @@
 **判定标准**：所有交互元素是否有完整的状态样式？
 
 检查清单（任一命中 → NO）：
-- [ ] 按钮/链接缺少 `:hover` 状态
-- [ ] 表单控件缺少 `:focus` 状态
-- [ ] 无 `:disabled` 样式但代码中有 disabled 逻辑
-- [ ] 无 loading 状态但有异步操作
-- [ ] 无 error 状态但有表单验证
-- [ ] 无 empty 状态但有列表/数据展示
+- 按钮/链接缺少 `:hover` 状态
+- 表单控件缺少 `:focus` 状态
+- 无 `:disabled` 样式但代码中有 disabled 逻辑
+- 无 loading 状态但有异步操作
+- 无 error 状态但有表单验证
+- 无 empty 状态但有列表/数据展示
 
 如果页面无交互元素 → 此 Gate 标记为 N/A。
 
@@ -99,11 +105,13 @@
 **判定标准**：是否全部使用 design token 而非硬编码值？
 
 检查清单（任一命中 → NO）：
-- [ ] 颜色值直接写 hex/rgb/hsl 而非引用 CSS 变量或 token
-- [ ] 间距值使用任意数字（`margin: 13px`）而非间距 scale
-- [ ] 字号使用任意值而非字号 scale
-- [ ] 圆角值不统一（同级元素有 `4px`、`6px`、`8px` 三种）
-- [ ] 阴影使用不同参数（同层级元素阴影不一致）
+- 颜色值直接写 hex/rgb/hsl 而非引用 CSS 变量、theme token 或 design system 变量
+- 间距值使用任意数字（`margin: 13px`）而非间距 scale
+- 字号使用任意值而非字号 scale
+- 圆角值不统一（同级元素有 `4px`、`6px`、`8px` 三种）
+- 阴影使用不同参数（同层级元素阴影不一致）
+
+**Tailwind CSS / UnoCSS 等 utility-first 框架**：框架提供的标准 utility class（如 `bg-blue-500`, `p-4`, `text-lg`）视为等效的 design token 体系。仅当使用 arbitrary values（如 `w-[137px]`, `bg-[#1a2b3c]`）时才视为"未走 token"。
 
 如果项目尚未建立 design token 体系 → 此 Gate 标记为 N/A，但在 Issues 中建议建立。
 
@@ -252,10 +260,14 @@ PASS ✅ = 所有 Gate 为 YES（或 N/A）
         AND 加权总分 ≥ 7.0
         AND 无 Critical issue
 
-CONDITIONAL PASS ⚠️ = 失败 Gate 数 ≤ 2
+CONDITIONAL PASS ⚠️ = 失败 Gate 数（不含 N/A）≤ 2
                      AND 失败 Gate 的修复不涉及架构变更（仅需添加/修改 CSS 属性或 HTML 属性）
                      AND 加权总分 ≥ 6.5
                      AND 无 Critical issue
+
+# 设计说明：Gate 失败会通过分数压制自动阻止 PASS（因为压制后维度分 < 6.0），
+# 只能走 CONDITIONAL PASS 或 FAIL。CONDITIONAL PASS 不要求每个维度 ≥ 6.0，
+# 这是 by design 的——Gate 压制的维度在 Gate 修复后分数会自然回升。
 
 FAIL ❌ = 其他情况
 ```
@@ -272,6 +284,8 @@ FAIL ❌ = 其他情况
 **Target**: [审查范围描述]
 **Design Context**: [有/无 .impeccable.md]
 **Design Spec**: [有/无 design-spec.md]
+**Files**: [N 个文件]
+**Stack**: [技术栈/框架]
 
 ---
 
@@ -286,11 +300,13 @@ FAIL ❌ = 其他情况
 | 5 | States Complete | ✅ YES / ❌ NO / N/A | [一句话说明] |
 | 6 | Design Token Aligned | ✅ YES / ❌ NO / N/A | [一句话说明] |
 
-**Gates: X/Y passed** [如果有 NO，列出哪些 Gate 未通过及原因]
+**Gates: X/Y passed**（Y = 非 N/A 的 Gate 总数）[如果有 NO，列出哪些 Gate 未通过及原因]
 
 ---
 
 ### Dimension Scores
+
+Key Observation = 该维度最突出的发现（亮点或问题均可，一句话概括）。
 
 | Dimension | Score | Weight | Weighted | Key Observation |
 |-----------|-------|--------|----------|-----------------|
@@ -343,7 +359,7 @@ FAIL ❌ = 其他情况
 
 ### Fix Sequence
 
-建议的修复顺序（修复 Gate 问题优先）：
+建议的修复顺序（Gate 问题优先，Gate 之间按影响面从大到小；非 Gate 问题按 Critical → Important → Minor）：
 
 1. [先修什么 → 用哪个 skill]
 2. [再修什么 → 用哪个 skill]
