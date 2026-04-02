@@ -9,10 +9,11 @@
 
 ## Skills Overview
 
-### 质量门控
+### 流程编排
 
 | Skill | 类型 | 说明 |
 |-------|------|------|
+| `frontend-workflow` | SOP | 设计先行开发流程，按场景分流（Full / Lite / Mini） |
 | `frontend-review` | Gate | 前端质量门控（6 维评分 + 6 项 Binary Gate） |
 
 ### 设计工作流
@@ -65,16 +66,28 @@
 
 ## 典型工作流
 
-### 从零开始的前端开发
+### 从零开始（Scene A: Full）
 
 ```
-teach-impeccable → ui-cases → design-freeze → frontend-design → frontend-review
+/frontend-workflow → teach-impeccable → ui-cases → design-freeze → frontend-design → frontend-review
+```
+
+### 已有设计语言，新增组件（Scene B: Lite）
+
+```
+/frontend-workflow → ui-cases → design-freeze → frontend-design → frontend-review
+```
+
+### 已有冻结 spec（Scene C: Mini）
+
+```
+/frontend-workflow → frontend-design → frontend-review
 ```
 
 ### 已有代码的质量把关
 
 ```
-frontend-review → 根据 Issues 中的 Skill 建议逐个修复 → re-review
+/frontend-review → 根据 Issues 中的 Skill 建议逐个修复 → re-review
 ```
 
 ### 与 devkit 配合
