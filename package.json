@@ -1,9 +1,21 @@
 {
-  "name": "frontend-devkit",
-  "version": "0.1.0",
-  "type": "module",
-  "description": "Frontend quality toolkit — impeccable design skills, UI case generation, design freeze, and frontend review gate",
-  "keywords": ["claude-code", "frontend", "design", "review", "quality", "impeccable", "skills"],
   "author": "Chasey",
-  "license": "BUSL-1.1"
+  "description": "Frontend quality toolkit — impeccable design skills, UI case generation, design freeze, and frontend review gate",
+  "keywords": [
+    "claude-code",
+    "frontend",
+    "design",
+    "review",
+    "quality",
+    "impeccable",
+    "skills"
+  ],
+  "license": "BUSL-1.1",
+  "lint-staged": {
+    "**/*.json": "prettier --write",
+    "**/*.md": "prettier --write"
+  },
+  "name": "frontend-devkit",
+  "type": "module",
+  "version": "0.1.0"
 }
